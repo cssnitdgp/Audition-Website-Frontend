@@ -1,4 +1,5 @@
 import React from "react";
+import logo from "../logo.png";
 import {
   AiOutlineInstagram,
   AiOutlineLinkedin,
@@ -9,12 +10,14 @@ import { FiArrowUpRight } from "react-icons/fi";
 const landingPage = () => {
   return (
     <>
-      <img src="../logo.png" />
+      <div className="header">
+        <img src= {logo} alt="CSS" className="csslogo"/>
+      </div>
       <div className="mainContainer">
         <div className="leftContent">
-          <h1 className="headBlack">WE</h1>
-          <h1 className="headPurple">ARE CSS</h1>
-          <h2 className="headBlack">Auditions are Live</h2>
+          <h1 className="headBlack" >WE</h1>
+          <h1 className="headPurple">ARE&nbsp;CSS</h1>
+          <h2 className="headBlack" id="headblack2">Auditions&nbsp;are&nbsp;Live</h2>
         </div>
         <div className="rightContent">
           <p className="aboutContent">
