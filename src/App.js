@@ -1,11 +1,13 @@
 import "./App.css";
-import LandingPage from "./LandingPage/landingPage";
+import LandingPage from "./components/LandingPage/landingPage";
+
 function App() {
-  return (
-    <div className="App">
-      <LandingPage />
-    </div>
-  );
+	console.log(process.env.REACT_APP_CLIENT_TOKEN);
+	return (
+		<div className="App">
+			<LandingPage />
+		</div>
+	);
 }
 
 export default App;
