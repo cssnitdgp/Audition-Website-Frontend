@@ -29,8 +29,15 @@ html {
 body {
   font-family: var(--font-primary);
   color: var(--color-primary);
-  background-color: var(--color-tertiary);
   overflow-x: hidden;
+  overflow-y: hidden;
+  background-image: linear-gradient(
+      to right bottom,
+      #fcfbff5d 0%,
+      rgba(255, 255, 255, 0.5) 100%
+    ),
+    url("assets/main.jpg");
+  background-size: cover;
 }
 
 p {
@@ -105,38 +112,37 @@ select {
 }
 
 @media screen and (max-width: 1300px) {
-  h1{
+  h1 {
     font-size: 8rem;
   }
-  h2{
+  h2 {
     font-size: 4rem;
   }
-  h3{
+  h3 {
     font-size: 3rem;
   }
-
 }
 
 @media screen and (max-width: 1000px) {
-  h1{
+  h1 {
     font-size: 6rem;
   }
-  h2{
+  h2 {
     font-size: 3rem;
   }
-  h3{
+  h3 {
     font-size: 3rem;
   }
 }
 
 @media screen and (max-width: 700px) {
-  h1{
+  h1 {
     font-size: 6rem;
   }
-  h2{
+  h2 {
     font-size: 3rem;
   }
-  h3{
+  h3 {
     font-size: 2rem;
   }
 }
