@@ -1,16 +1,43 @@
 import "./App.css";
+import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage/landingPage";
+import Form from "./components/FormPage/Form";
 
 function App() {
-  console.log(process.env.REACT_APP_CLIENT_TOKEN);
-  return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-      </Routes>
-    </div>
-  );
+	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+	const [currentUser, setCurrentUser] = useState("");
+
+	useEffect(() => {
+		const loggedInUser = localStorage.getItem("userinfo");
+		if (loggedInUser) {
+			const foundUser = JSON.parse(loggedInUser);
+			setCurrentUser(foundUser);
+			setIsUserLoggedIn(true);
+		}
+	}, []);
+	return (
+		<div className="App">
+			<Routes>
+				<Route
+					path="/"
+					element={
+						<LandingPage
+							isUserLoggedIn={isUserLoggedIn}
+							setIsUserLoggedIn={setIsUserLoggedIn}
+							currentUser={currentUser}
+							setCurrentUser={setCurrentUser}
+						/>
+					}
+				/>
+				<Route
+					path="/form"
+					element={<Form isUserLoggedIn={isUserLoggedIn} />}
+				/>
+				<Route path="*" component={<div>Error 404</div>} />
+			</Routes>
+		</div>
+	);
 }
 
 export default App;

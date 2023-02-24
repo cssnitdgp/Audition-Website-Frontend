@@ -1,0 +1,283 @@
+.form_root {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.header {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	top: 0;
+}
+
+.question {
+	width: 100%;
+}
+
+.question_heading {
+	margin-bottom: 20px;
+}
+
+.questions-page {
+	padding-top: 10rem;
+	padding-bottom: 3rem;
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	justify-content: space-between;
+	overflow: auto;
+}
+
+.options_box {
+	margin: 10px 0;
+	position: relative;
+	cursor: pointer;
+	font-size: 18px;
+	user-select: none;
+	display: block;
+}
+
+.option_label input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 25px;
+	border-radius: 5px;
+	background-color: #eee;
+}
+
+.option_label:hover input ~ .checkmark {
+	background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.option_label input:checked ~ .checkmark {
+	background-color: var(--color-secondary);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.option_label:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+.option_label input:checked ~ .checkmark:after {
+	display: block;
+}
+
+/* Style the checkmark/indicator */
+.option_label .checkmark:after {
+	left: 9px;
+	top: 5px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+.questions_input_num {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.question_box {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: space-between;
+	height: 100%;
+	padding: 20px 0;
+}
+
+.option_label {
+	font-size: 16px;
+	margin: 20px 0;
+	width: 100%;
+	display: block;
+	position: relative;
+	padding-left: 35px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.button_group {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.input_area {
+	width: 60rem;
+	height: 30rem;
+	border-radius: 10px;
+	margin: 5px 0 20px 0;
+	padding: 10px;
+	resize: none;
+	font-size: 16px;
+}
+
+.input_field {
+	width: 100%;
+	border-radius: 10px;
+	outline: none;
+	margin: 5px 0 20px 0;
+	padding: 10px;
+	font-size: 16px;
+}
+
+.question-range {
+	width: 50%;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+input[type="range"].styled-slider {
+	height: 2.2em;
+	-webkit-appearance: none;
+}
+
+/*progress support*/
+input[type="range"].styled-slider.slider-progress {
+	--range: calc(var(--max) - var(--min));
+	--ratio: calc((var(--value) - var(--min)) / var(--range));
+	--sx: calc(0.5 * 1em + var(--ratio) * (100% - 1em));
+	width: 80%;
+}
+
+input[type="range"].styled-slider:focus {
+	outline: none;
+}
+
+/*webkit*/
+input[type="range"].styled-slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 1em;
+	height: 1em;
+	border-radius: 1em;
+	background: #8c75ff;
+	border: none;
+	box-shadow: 0 0 2px black;
+	margin-top: calc(max((1em - 1px - 1px) * 0.5, 0px) - 1em * 0.5);
+}
+
+input[type="range"].styled-slider::-webkit-slider-runnable-track {
+	height: 1em;
+	border: 1px solid #b2b2b2;
+	border-radius: 0.5em;
+	background: transparent;
+	box-shadow: none;
+}
+
+input[type="range"].styled-slider:hover::-webkit-slider-runnable-track {
+	border-color: #9a9a9a;
+}
+
+input[type="range"].styled-slider:active::-webkit-slider-runnable-track {
+	border-color: #c1c1c1;
+}
+
+input[type="range"].styled-slider.slider-progress::-webkit-slider-runnable-track {
+	background: linear-gradient(#8c75ff, #8c75ff) 0 / var(--sx) 100% no-repeat,
+		transparent;
+}
+
+/*mozilla*/
+input[type="range"].styled-slider::-moz-range-thumb {
+	width: 1em;
+	height: 1em;
+	border-radius: 1em;
+	background: #8c75ff;
+	border: none;
+	box-shadow: 0 0 2px black;
+}
+
+input[type="range"].styled-slider::-moz-range-track {
+	height: max(calc(1em - 1px - 1px), 0px);
+	border: 1px solid #b2b2b2;
+	border-radius: 0.5em;
+	box-shadow: none;
+}
+
+input[type="range"].styled-slider:hover::-moz-range-track {
+	border-color: #9a9a9a;
+}
+
+input[type="range"].styled-slider:active::-moz-range-track {
+	border-color: #c1c1c1;
+}
+
+input[type="range"].styled-slider.slider-progress::-moz-range-track {
+	background: linear-gradient(#8c75ff, #8c75ff) 0 / var(--sx) 100% no-repeat,
+		transparent;
+}
+
+/*ms*/
+input[type="range"].styled-slider::-ms-fill-upper {
+	background: transparent;
+	border-color: transparent;
+}
+
+input[type="range"].styled-slider::-ms-fill-lower {
+	background: transparent;
+	border-color: transparent;
+}
+
+input[type="range"].styled-slider::-ms-thumb {
+	width: 1em;
+	height: 1em;
+	border-radius: 1em;
+	background: #8c75ff;
+	border: none;
+	box-shadow: 0 0 2px black;
+	margin-top: 0;
+	box-sizing: border-box;
+}
+
+input[type="range"].styled-slider::-ms-track {
+	height: 1em;
+	border-radius: 0.5em;
+	background: transparent;
+	border: 1px solid #b2b2b2;
+	box-shadow: none;
+	box-sizing: border-box;
+}
+
+input[type="range"].styled-slider:hover::-ms-track {
+	border-color: #9a9a9a;
+}
+
+input[type="range"].styled-slider:active::-ms-track {
+	border-color: #c1c1c1;
+}
+
+input[type="range"].styled-slider.slider-progress::-ms-fill-lower {
+	height: max(calc(1em - 1px - 1px), 0px);
+	border-radius: 0.5em 0 0 0.5em;
+	margin: -1px 0 -1px -1px;
+	background: #8c75ff;
+	border: 1px solid #b2b2b2;
+	border-right-width: 0;
+}

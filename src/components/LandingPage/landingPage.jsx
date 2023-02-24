@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
 	AiOutlineInstagram,
 	AiOutlineLinkedin,
@@ -8,10 +8,15 @@ import {
 import axios from "axios";
 import { FiArrowUpRight } from "react-icons/fi";
 import { useGoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
 
-const LandingPage = () => {
-	const [currentUser, setCurrentUser] = useState("");
-	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+const LandingPage = ({
+	isUserLoggedIn,
+	setIsUserLoggedIn,
+	setCurrentUser,
+	currentUser,
+}) => {
+	const navigate = useNavigate();
 
 	const login = useGoogleLogin({
 		onSuccess: async (tokenResponse) => {
@@ -21,7 +26,7 @@ const LandingPage = () => {
 					headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
 				}
 			);
-
+			localStorage.setItem("userinfo", JSON.stringify(res.data));
 			setCurrentUser(res.data);
 			setIsUserLoggedIn(true);
 		},
@@ -33,40 +38,43 @@ const LandingPage = () => {
 	console.log(currentUser);
 	return (
 		<>
-      <section className='nav'>
-		<div className="leftnav">
-			<div className='nav_item'>
-			<h4 className='nav_link one'>Web Design</h4>
-			</div>
-			<div className='nav_item'>
-			<h4 className='nav_link two'>Graphic Design</h4>
-			</div>
-		</div>
-        <div className='nav_item'>
-          <a href='/' className='nav_logo'>
-            <img height='60' width='60' src='/favicon.png' alt="CSS" />
-          </a>
-        </div>
-		<div className="rightnav">
-			<div className='nav_item'>
-			<h4 className='nav_link three'>Alumni Interaction</h4>
-			</div>
-			<div className='nav_item'>
-			<h4 className='nav_link four'>Event Management</h4>
-			</div>
-		</div>
-
-      </section>
+			<section className="nav">
+				<div className="leftnav">
+					<div className="nav_item">
+						<h4 className="nav_link one">Web Design</h4>
+					</div>
+					<div className="nav_item">
+						<h4 className="nav_link two">Graphic Design</h4>
+					</div>
+				</div>
+				<div className="nav_item">
+					<a href="/" className="nav_logo">
+						<img height="60" width="60" src="/favicon.png" alt="CSS" />
+					</a>
+				</div>
+				<div className="rightnav">
+					<div className="nav_item">
+						<h4 className="nav_link three">Alumni Interaction</h4>
+					</div>
+					<div className="nav_item">
+						<h4 className="nav_link four">Event Management</h4>
+					</div>
+				</div>
+			</section>
 			<div className="mainContainer">
 				<div className="leftContent">
 					<h1 className="headPurple">We</h1>
-					<h1 className="headBlack">Are&nbsp;CSS<span className="headPurple">!</span></h1>
+					<h1 className="headBlack">
+						Are&nbsp;CSS<span className="headPurple">!</span>
+					</h1>
 					<div className="auditions_live">
 						<svg height="50" width="50" className="blinking">
 							<circle cx="25" cy="25" r="5" fill="red" />
 							Sorry, your browser does not support inline SVG.
 						</svg>
-						<h2 className="headBlack">Auditions&nbsp;are&nbsp;<span className="headPurple">Live</span>!</h2>
+						<h2 className="headBlack">
+							Auditions&nbsp;are&nbsp;<span className="headPurple">Live</span>!
+						</h2>
 					</div>
 				</div>
 				<div className="rightContent">
@@ -79,10 +87,13 @@ const LandingPage = () => {
 						assumenda dolores, necessitatibus at.
 					</p>
 					<div className="socialIconDiv">
-						<button className="btn primary regorfill" onClick={login}>
+						<button
+							className="btn primary regorfill"
+							onClick={!isUserLoggedIn ? login : () => navigate("/form")}
+						>
 							{" "}
 							<span className="btn_content">
-								<span className="btn_text" >
+								<span className="btn_text">
 									{isUserLoggedIn ? "Fill the Form" : "Register"}
 								</span>
 								<span className="btn_icon">
@@ -121,9 +132,9 @@ const LandingPage = () => {
 					</div>
 				</div>
 			</div>
-			<div className='home_second'>
-        		<img className='home_second_img' src='/home.jpeg' alt="homeimg" />
-      		</div>
+			<div className="home_second">
+				<img className="home_second_img" src="/home.jpeg" alt="homeimg" />
+			</div>
 		</>
 	);
 };
