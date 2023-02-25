@@ -33,9 +33,9 @@ export const FORM_DATA = [
       },
       {
         id: 4,
-        title: "Phone Number",
+        title: "Phone Number(Preferably Whatsapp)",
         required: true,
-        type: "textfield",
+        type: "Number",
         inputType: "Number",
       },
       {

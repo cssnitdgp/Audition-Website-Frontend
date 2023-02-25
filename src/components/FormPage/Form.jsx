@@ -1,4 +1,5 @@
 import { googleLogout } from "@react-oauth/google";
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FORM_DATA } from "../../data";
@@ -85,10 +86,19 @@ const Form = ({ isUserLoggedIn }) => {
                         className="input_field"
                       />
                     ))}
+                  {questions.type === "Number" && (
+                    <input
+                      type="text"
+                      className="input_field"
+                      pattern="[1-9]{1}[0-9]{9}"
+                      required
+                    />
+                  )}
                   {questions.type === "textarea" && (
                     <textarea
                       className="input_area"
                       placeholder="Enter Here..."
+                      required
                     />
                   )}
                   {questions.type === "checkbox" &&
@@ -134,7 +144,7 @@ const Form = ({ isUserLoggedIn }) => {
           {page === FORM_DATA.length - 1 && (
             <button
               className="btn secondary form_btn"
-              type="button"
+              type="submit"
               onClick={submitForm()}
             >
               Submit
