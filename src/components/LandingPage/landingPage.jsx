@@ -89,7 +89,8 @@ const LandingPage = ({
             the society. We are auditioning for the following roles: Web
             Development, Graphic Designing, Video Editing, Alumni Outreach,
             Event Management, App Development, Content Writing. If you have what
-            require to be the part of <b>CSS</b>, fill the form.
+            require to be a part of <b>CSS</b>, fill the form and be the part of
+            the team.
           </p>
           <div className="socialIconDiv">
             <button
