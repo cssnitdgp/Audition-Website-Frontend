@@ -89,7 +89,7 @@ const Form = ({ isUserLoggedIn }) => {
 		};
 
 		try {
-			const url = "http://localhost:5000/api/form/add";
+			const url = process.env.API_URL;
 			const { data: res } = await axios.post(url, data);
 			console.log(res);
 			if (res.message === "Form Submitted Successfully") {
