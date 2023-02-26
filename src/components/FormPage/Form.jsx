@@ -47,8 +47,6 @@ const Form = ({ isUserLoggedIn }) => {
   });
 
 
-  console.log(personalInfo);
-
   let navigate = useNavigate();
   useLayoutEffect(() => {
     if (!isUserLoggedIn) {
