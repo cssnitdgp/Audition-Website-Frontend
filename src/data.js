@@ -113,7 +113,7 @@ export const FORM_DATA = [
 					"Give links of some of your previous works related to the roles you are applying for.(optional)",
 				type: "textfield",
 				value: "prev_links",
-				required: "false",
+				required: false,
 			},
 		],
 	},

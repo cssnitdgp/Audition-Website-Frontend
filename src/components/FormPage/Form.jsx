@@ -8,33 +8,46 @@ import "./Form.css";
 
 const Form = ({ isUserLoggedIn }) => {
   const [page, setPage] = useState(0);
+  const [skills,setSkills] = useState({
+    web_dev : false,
+    gd : false,
+    vid_edit : false,
+    alumini_outreach : false,
+    event_man : false,
+    app_dev : false,
+    content_writing : false,
+  });
+
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [aboutPerson, setAboutPerson] = useState(undefined);
   const [personalInfo, setPersonalInfo] = useState({
-    name: undefined,
-    roll_no: undefined,
-    reg_no: undefined,
-    email_id: undefined,
-    phone: undefined,
-    github: undefined,
-    linkedin: undefined,
+    name: "",
+    roll_no: "",
+    reg_no: "",
+    email_id: "",
+    phone: "",
+    github: "",
+    linkedin: "",
   });
 
   const [skillsData, setSkillsData] = useState({
-    pref_order: undefined,
-    tech_stack: undefined,
-    prev_links: undefined,
+    pref_order: "",
+    tech_stack: "",
+    prev_links: "",
   });
 
   const [otherInfo, setOtherInfo] = useState({
-    hardwork: undefined,
-    teamwork: undefined,
-    humor: undefined,
-    punctual: undefined,
-    creative: undefined,
-    prob_solving: undefined,
-    responsible: undefined,
+    hardwork: "",
+    teamwork: "",
+    humor: "",
+    punctual: "",
+    creative: "",
+    prob_solving: "",
+    responsible: "",
   });
+
+
+  console.log(personalInfo);
 
   let navigate = useNavigate();
   useLayoutEffect(() => {
@@ -43,27 +56,93 @@ const Form = ({ isUserLoggedIn }) => {
     }
   }, [isUserLoggedIn, navigate]);
 
-  const handleInputChange = (e, value) => {
+const handleInputChange = (e, value) => {
     if (page === 0) {
-      personalInfo[value] = e.target.value;
-      setPersonalInfo(personalInfo);
+      setPersonalInfo(previousState => {
+        let y = e.target.value;
+        if(value==="name")
+        return { ...previousState, name:y }
+        if(value==="roll_no")
+        return { ...previousState, roll_no:y }
+        else if(value==="reg_no")
+        return { ...previousState, reg_no:y }
+        else if(value==="email_id")
+        return { ...previousState, email_id:y }
+        else if(value==="phone")
+        return { ...previousState, phone:y }
+        else if(value==="github")
+        return { ...previousState, github:y }
+        else if(value==="linkedin")
+        return { ...previousState, linkedin:y }
+      });
     } else if (page === 2) {
-      skillsData[value] = e.target.value;
-      setSkillsData(skillsData);
-    } else {
-      otherInfo[value] = e.target.value;
-      setOtherInfo(otherInfo);
+      setSkillsData(previousState => {
+        let y = e.target.value;
+        if(value==="pref_order")
+        return { ...previousState, pref_order:y }
+        else if(value==="tech_stack")
+        return { ...previousState, tech_stack:y }
+        else if(value==="prev_links")
+        return { ...previousState, prev_links:y }
+      });
+    } else if(page === 3) {
+      setOtherInfo(previousState => {
+        let y = e.target.value;
+        if(value==="hardwork")
+        return { ...previousState, hardwork:y }
+        else if(value==="teamwork")
+        return { ...previousState, teamwork:y }
+        else if(value==="humor")
+        return { ...previousState, humor:y }
+        else if(value==="punctual")
+        return { ...previousState, punctual:y }
+        else if(value==="creative")
+        return { ...previousState, creative:y }
+        else if(value==="prob_solving")
+        return { ...previousState, prob_solving:y }
+        else if(value==="responsible")
+        return { ...previousState, responsible:y }
+      });
     }
   };
 
   const handleInputAreaChange = (e, value) => {
     if (page === 1) {
       setAboutPerson(e.target.value);
-    } else {
-      skillsData[value] = e.target.value;
-      setSkillsData(skillsData);
+    } else if(page === 2) {
+      setSkillsData(previousState => {
+        let y = e.target.value;
+        if(value==="pref_order")
+        return { ...previousState, pref_order:y }
+        else if(value==="tech_stack")
+        return { ...previousState, tech_stack:y }
+        else if(value==="prev_links")
+        return { ...previousState, prev_links:y }
+      });
     }
   };
+
+  const handleCheckChange = (e, value) => {
+    setSkills(previousState => {
+        let y = e.target.checked;
+        if(value==="web_dev")
+        return { ...previousState, web_dev:y }
+        else if(value==="gd")
+        return { ...previousState, gd:y }
+        else if(value==="vid_edit")
+        return { ...previousState, vid_edit:y }
+        else if(value==="alumini_outreach")
+        return { ...previousState, alumini_outreach:y }
+        else if(value==="event_man")
+        return { ...previousState, event_man:y }
+        else if(value==="app_dev")
+        return { ...previousState, app_dev:y }
+        else if(value==="content_writing")
+        return { ...previousState, content_writing:y }
+      });
+    
+  };
+
 
   const handlePageSubmit = async (e) => {
     e.preventDefault();
@@ -176,6 +255,9 @@ const Form = ({ isUserLoggedIn }) => {
                                 min='1'
                                 max='10'
                                 size={2}
+                                value={
+                                  otherInfo[op.value]
+                                }
                                 onChange={(e) => handleInputChange(e, op.value)}
                                 className='input_field'
                               />
@@ -219,8 +301,18 @@ const Form = ({ isUserLoggedIn }) => {
                               <input
                                 type='checkbox'
                                 id={op.id}
+                                checked={
+                                  skills[op.id]
+                                }
                                 onChange={(e) => {
-                                  selectedSkills.push(e.target.id);
+                                  handleCheckChange(e, op.id);
+                                  if(!(selectedSkills.includes(op.id)) && e.target.checked===true )
+                                    selectedSkills.push(e.target.id);
+                                  if((selectedSkills.includes(op.id)) && e.target.checked===false )
+                                  {
+                                    const index = selectedSkills.indexOf(op.id);
+                                    selectedSkills.splice(index, 1);
+                                  }
                                   setSelectedSkills(selectedSkills);
                                   console.log(
                                     selectedSkills.find((sk) => sk === op.id)

@@ -142,3 +142,15 @@ select {
     font-size: 2rem;
   }
 }
+
+@media screen and (max-width: 400px) {
+  h1{
+    font-size: 4rem;
+  }
+  h2{
+    font-size: 1.75rem;
+  }
+  h3{
+    font-size: 0.75rem;
+  }
+}
