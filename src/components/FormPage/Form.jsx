@@ -159,6 +159,11 @@ const Form = ({ isUserLoggedIn }) => {
 				alert("Form Submitted Successfully");
 				navigate("/");
 			}
+			else if (res.message === "Form already Submitted!") {
+			alert("Form already Submitted!");
+			navigate("/");
+      		}
+
 		} catch (err) {
 			setLoading(false);
 			console.log(err);
