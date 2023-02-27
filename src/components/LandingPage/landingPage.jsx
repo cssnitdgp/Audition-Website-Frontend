@@ -17,6 +17,7 @@ const LandingPage = ({
 	currentUser,
 }) => {
 	const navigate = useNavigate();
+	const checkFilled = localStorage.getItem("form_success");
 
 	const login = useGoogleLogin({
 		onSuccess: async (tokenResponse) => {

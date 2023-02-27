@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage/landingPage";
 import Form from "./components/FormPage/Form";
 import Privacy from "./components/Privacy/Privacy";
-
+import Modal from "./components/Modal/modal";
 function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
@@ -18,10 +18,10 @@ function App() {
     }
   }, []);
   return (
-    <div className='App'>
+    <div className="App">
       <Routes>
         <Route
-          path='/'
+          path="/"
           element={
             <LandingPage
               isUserLoggedIn={isUserLoggedIn}
@@ -31,12 +31,13 @@ function App() {
             />
           }
         />
-        <Route path='/privacy' element={<Privacy />} />
+        <Route path="/privacy" element={<Privacy />} />
         <Route
-          path='/form'
+          path="/form"
           element={<Form isUserLoggedIn={isUserLoggedIn} />}
         />
-        <Route path='*' component={<div>Error 404</div>} />
+        <Route path="/submitted" element={<Modal />} />
+        <Route path="*" component={<div>Error 404</div>} />
       </Routes>
     </div>
   );

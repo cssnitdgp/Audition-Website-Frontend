@@ -344,8 +344,6 @@ input[type="range"].styled-slider.slider-progress:active::-ms-fill-lower {
 
 /* =======================================  */
 
-/*generated with Input range slider CSS style generator (version 20211225)
-https://toughengineer.github.io/demo/slider-styler*/
 input[type="range"].styled-slider2 {
 	height: 2.2em;
 	-webkit-appearance: none;

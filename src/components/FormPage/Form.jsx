@@ -138,6 +138,7 @@ const FormPage = ({ isUserLoggedIn }) => {
 				e.stopPropagation();
 				e.preventDefault();
 			}
+			console.log("in if");
 			setValidated(true);
 			if (form.checkValidity() === true) {
 				setPage(page + 1);
@@ -178,10 +179,9 @@ const FormPage = ({ isUserLoggedIn }) => {
 				},
 			});
 			setLoading(false);
-			console.log(res);
 			if (res.message === "Form Submitted Successfully") {
-				alert("Form Submitted Successfully");
-				navigate("/");
+				navigate("/submitted");
+				localStorage.setItem("form_success", true);
 			}
 		} catch (err) {
 			setLoading(false);
@@ -325,15 +325,15 @@ const FormPage = ({ isUserLoggedIn }) => {
 													required={questions.required}
 												/>
 												<Form.Control.Feedback type="invalid">
-													Please Fill out required details.
+													Fill out all required details.
 												</Form.Control.Feedback>
 											</>
 										)}
 										{questions.type === "checkbox" &&
 											questions.options.map((op) => {
 												return (
-													<Form.Group className="options_box" key={op.id}>
-														<Form.Label className="option_label">
+													<div className="options_box" key={op.id}>
+														<label className="option_label">
 															{op.option}
 															<input
 																type="checkbox"
@@ -360,8 +360,8 @@ const FormPage = ({ isUserLoggedIn }) => {
 																}}
 															/>
 															<span className="checkmark"></span>
-														</Form.Label>
-													</Form.Group>
+														</label>
+													</div>
 												);
 											})}
 									</Form.Group>
@@ -394,6 +394,7 @@ const FormPage = ({ isUserLoggedIn }) => {
 									className="custom_btn secondary form_btn"
 									type="submit"
 									id="next"
+									onClick={handlePageSubmit}
 								>
 									{loading ? (
 										<Spinner animation="border" variant="light" />
