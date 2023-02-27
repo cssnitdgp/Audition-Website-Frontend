@@ -7,7 +7,6 @@ import { ColorRing } from "react-loader-spinner";
 import "./Form.css";
 import modal from "../Modal/modal";
 const Form = ({ isUserLoggedIn }) => {
-  const [submitted, setsubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [skills, setSkills] = useState({
@@ -157,7 +156,8 @@ const Form = ({ isUserLoggedIn }) => {
       setLoading(false);
       console.log(res);
       if (res.message === "Form Submitted Successfully") {
-        navigate("/submitted");
+        alert("Form Submitted Successfully");
+        navigate("/");
       }
     } catch (err) {
       setLoading(false);
@@ -170,8 +170,8 @@ const Form = ({ isUserLoggedIn }) => {
     'input[type="range"].slider-progress'
   )) {
     e.style.setProperty("--value", page);
-    e.style.setProperty("--min", "0");
-    e.style.setProperty("--max", FORM_DATA.length - 1);
+    e.style.setProperty("--min", e.min === "" ? "0" : 0);
+    e.style.setProperty("--max", e.max === "" ? "100" : FORM_DATA.length - 1);
     e.addEventListener("input", () => e.style.setProperty("--value", page));
   }
 
@@ -212,7 +212,6 @@ const Form = ({ isUserLoggedIn }) => {
           <a href="/">Logout</a>
         </button>
       </div>
-      <modal className="modalClass" />
       <div className="questions-page">
         {FORM_DATA.length > page && (
           <form>
