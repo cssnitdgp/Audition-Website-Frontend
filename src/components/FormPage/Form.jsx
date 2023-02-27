@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 
 import axios from "axios";
 import { googleLogout } from "@react-oauth/google";
@@ -49,6 +49,10 @@ const FormPage = ({ isUserLoggedIn }) => {
 		prob_solving: "1",
 		responsible: "1",
 	});
+
+	useEffect(() => {
+		if (localStorage.getItem("form_success")) navigate("/submitted");
+	}, [navigate]);
 
 	// All Functions Handlers
 	const handleOtherInfo = (e, value) => {
@@ -138,7 +142,6 @@ const FormPage = ({ isUserLoggedIn }) => {
 				e.stopPropagation();
 				e.preventDefault();
 			}
-			console.log("in if");
 			setValidated(true);
 			if (form.checkValidity() === true) {
 				setPage(page + 1);
@@ -185,7 +188,6 @@ const FormPage = ({ isUserLoggedIn }) => {
 			}
 		} catch (err) {
 			setLoading(false);
-			console.log(err);
 			alert(err.response.data.message);
 		}
 	};
@@ -354,9 +356,6 @@ const FormPage = ({ isUserLoggedIn }) => {
 																		selectedSkills.splice(index, 1);
 																	}
 																	setSelectedSkills(selectedSkills);
-																	console.log(
-																		selectedSkills.find((sk) => sk === op.id)
-																	);
 																}}
 															/>
 															<span className="checkmark"></span>

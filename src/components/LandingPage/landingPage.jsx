@@ -36,7 +36,6 @@ const LandingPage = ({
 		},
 	});
 
-	console.log(currentUser);
 	return (
 		<>
 			<section className="nav">
@@ -98,7 +97,7 @@ const LandingPage = ({
 							<button
 								className="custom_btn primary disabled regorfill"
 								onClick={!isUserLoggedIn ? login : () => navigate("/form")}
-								disabled={checkFilled}
+								disabled={{ checkFilled }}
 							>
 								{" "}
 								<span className="btn_content">
