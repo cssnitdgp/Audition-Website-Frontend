@@ -1,13 +1,19 @@
-import { googleLogout } from "@react-oauth/google";
 import React, { useState, useLayoutEffect } from "react";
+
 import axios from "axios";
+import { googleLogout } from "@react-oauth/google";
+import { Form, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+
 import { FORM_DATA } from "../../data";
-import { ColorRing } from "react-loader-spinner";
+
 import "./Form.css";
 
-const Form = ({ isUserLoggedIn }) => {
+const FormPage = ({ isUserLoggedIn }) => {
+	let navigate = useNavigate();
+	// All States
 	const [loading, setLoading] = useState(false);
+	const [validated, setValidated] = useState(false);
 	const [page, setPage] = useState(0);
 	const [skills, setSkills] = useState({
 		web_dev: false,
@@ -18,7 +24,6 @@ const Form = ({ isUserLoggedIn }) => {
 		app_dev: false,
 		content_writing: false,
 	});
-
 	const [selectedSkills, setSelectedSkills] = useState([]);
 	const [aboutPerson, setAboutPerson] = useState(undefined);
 	const [personalInfo, setPersonalInfo] = useState({
@@ -30,24 +35,27 @@ const Form = ({ isUserLoggedIn }) => {
 		github: "",
 		linkedin: "",
 	});
-
 	const [skillsData, setSkillsData] = useState({
 		pref_order: "",
 		tech_stack: "",
 		prev_links: "",
 	});
-
 	const [otherInfo, setOtherInfo] = useState({
-		hardwork: "",
-		teamwork: "",
-		humor: "",
-		punctual: "",
-		creative: "",
-		prob_solving: "",
-		responsible: "",
+		hardwork: "1",
+		teamwork: "1",
+		humor: "1",
+		punctual: "1",
+		creative: "1",
+		prob_solving: "1",
+		responsible: "1",
 	});
 
-	let navigate = useNavigate();
+	// All Functions Handlers
+	const handleOtherInfo = (e, value) => {
+		otherInfo[value] = e.target.value;
+		setOtherInfo(otherInfo);
+	};
+
 	useLayoutEffect(() => {
 		if (!isUserLoggedIn) {
 			return navigate("/");
@@ -123,6 +131,22 @@ const Form = ({ isUserLoggedIn }) => {
 
 	const handlePageSubmit = async (e) => {
 		e.preventDefault();
+
+		if (page < FORM_DATA.length - 1) {
+			const form = e.currentTarget;
+			if (form.checkValidity() === false) {
+				e.stopPropagation();
+				e.preventDefault();
+			}
+			setValidated(true);
+			if (form.checkValidity() === true) {
+				setPage(page + 1);
+				setValidated(false);
+			}
+
+			return;
+		}
+
 		const data = {
 			name: personalInfo.name,
 			rollno: personalInfo.roll_no,
@@ -175,10 +199,19 @@ const Form = ({ isUserLoggedIn }) => {
 		e.addEventListener("input", () => e.style.setProperty("--value", page));
 	}
 
+	for (let e of document.querySelectorAll(
+		'input[type="range"].slider-progress2'
+	)) {
+		e.style.setProperty("--value", e.value);
+		e.style.setProperty("--min", e.min === "" ? "0" : e.min);
+		e.style.setProperty("--max", e.max === "" ? "100" : e.max);
+		e.addEventListener("input", () => e.style.setProperty("--value", e.value));
+	}
+
 	return !isUserLoggedIn ? (
 		<div className="back">
 			<h3 style={{ marginBottom: "20px" }}>Login to fill the form</h3>
-			<button className="btn primary" onClick={() => navigate("/")}>
+			<button className="custom_btn primary" onClick={() => navigate("/")}>
 				Go back
 			</button>
 		</div>
@@ -202,7 +235,7 @@ const Form = ({ isUserLoggedIn }) => {
 					</span>
 				</div>
 				<button
-					className="btn primary logout_btn"
+					className="custom_btn primary logout_btn"
 					type="submit"
 					onClick={() => {
 						googleLogout();
@@ -214,67 +247,93 @@ const Form = ({ isUserLoggedIn }) => {
 			</div>
 			<div className="questions-page">
 				{FORM_DATA.length > page && (
-					<form>
+					<Form noValidate validated={validated} onSubmit={handlePageSubmit}>
 						<div className="question_box">
 							<h3 className="question_heading">{FORM_DATA[page].subHeading}</h3>
 							{FORM_DATA[page].questionData.map((questions) => {
 								return (
-									<div className="question" key={questions.id}>
-										<p>{questions.title}</p>
+									<Form.Group className="question" key={questions.id}>
+										<Form.Label
+											className={`form_label ${
+												questions.required && "required"
+											}`}
+										>
+											{questions.title}
+										</Form.Label>
 										{questions.type === "textfield" &&
 											(questions.options ? (
 												questions.options.map((op) => {
 													return (
-														<div key={op.id} className="questions_input_num">
-															<label className="option_label">
+														<Form.Group
+															key={op.id}
+															className="questions_input_num"
+														>
+															<Form.Label className="option_label">
 																{op.option}
-															</label>
-															<input
-																type={questions.fieldType}
-																required
-																min="1"
-																max="10"
-																size={2}
-																value={otherInfo[op.value]}
-																onChange={(e) => handleInputChange(e, op.value)}
-																className="input_field"
+															</Form.Label>
+															<Form.Control
+																required={false}
+																type="range"
+																min={0}
+																max={10}
+																step={1}
+																onChange={(e) => handleOtherInfo(e, op.value)}
+																defaultValue={1}
+																className="slider-border styled-slider2 slider-progress2"
 															/>
-														</div>
+															<Form.Label className="form_otherInfo">
+																{otherInfo[op.value]} / 10
+															</Form.Label>
+														</Form.Group>
 													);
 												})
 											) : (
-												<input
-													type={questions.inputType}
-													required={questions.required}
-													value={
-														page === 0
-															? personalInfo[questions.value]
-															: skillsData[questions.value]
-													}
-													onChange={(e) =>
-														handleInputChange(e, questions.value)
-													}
-													className="input_field"
-												/>
+												<>
+													<Form.Control
+														type={questions.inputType}
+														required={questions.required}
+														value={
+															page === 0
+																? personalInfo[questions.value]
+																: skillsData[questions.value]
+														}
+														onChange={(e) =>
+															handleInputChange(e, questions.value)
+														}
+														className="input_field"
+													/>
+													<Form.Control.Feedback type="invalid">
+														{questions.errorMsg}
+													</Form.Control.Feedback>
+												</>
 											))}
 
 										{questions.type === "textarea" && (
-											<textarea
-												className="input_area"
-												placeholder="Enter Here..."
-												value={
-													page === 1 ? aboutPerson : skillsData[questions.value]
-												}
-												onChange={(e) =>
-													handleInputAreaChange(e, questions.value)
-												}
-											/>
+											<>
+												<Form.Control
+													as="textarea"
+													className="input_area"
+													placeholder="Enter Here..."
+													value={
+														page === 1
+															? aboutPerson
+															: skillsData[questions.value]
+													}
+													onChange={(e) =>
+														handleInputAreaChange(e, questions.value)
+													}
+													required={questions.required}
+												/>
+												<Form.Control.Feedback type="invalid">
+													Please Fill out required details.
+												</Form.Control.Feedback>
+											</>
 										)}
 										{questions.type === "checkbox" &&
 											questions.options.map((op) => {
 												return (
-													<div className="options_box" key={op.id}>
-														<label className="option_label">
+													<Form.Group className="options_box" key={op.id}>
+														<Form.Label className="option_label">
 															{op.option}
 															<input
 																type="checkbox"
@@ -301,17 +360,17 @@ const Form = ({ isUserLoggedIn }) => {
 																}}
 															/>
 															<span className="checkmark"></span>
-														</label>
-													</div>
+														</Form.Label>
+													</Form.Group>
 												);
 											})}
-									</div>
+									</Form.Group>
 								);
 							})}
 						</div>
 						<div className="button_group">
 							<button
-								className="btn primary form_btn"
+								className="custom_btn primary form_btn"
 								type="button"
 								id="prev"
 								disabled={page === 0}
@@ -323,49 +382,32 @@ const Form = ({ isUserLoggedIn }) => {
 							</button>
 							{page < FORM_DATA.length - 1 && (
 								<button
-									className="btn secondary form_btn"
-									type="button"
+									className="custom_btn secondary form_btn"
+									type="submit"
 									id="next"
-									onClick={() => {
-										setPage(page + 1);
-									}}
 								>
 									Next
 								</button>
 							)}
-							{loading && (
-								<ColorRing
-									visible={true}
-									height="80"
-									width="80"
-									ariaLabel="blocks-loading"
-									wrapperStyle={{}}
-									wrapperClass="blocks-wrapper"
-									colors={[
-										"#8c75ff",
-										"#f47e60",
-										"#f8b26a",
-										"#abbd81",
-										"#849b87",
-									]}
-								/>
-							)}
 							{page === FORM_DATA.length - 1 && (
 								<button
-									className="btn secondary form_btn"
+									className="custom_btn secondary form_btn"
 									type="submit"
 									id="next"
-									onClick={handlePageSubmit}
 								>
-									Submit
+									{loading ? (
+										<Spinner animation="border" variant="light" />
+									) : (
+										"Submit"
+									)}
 								</button>
 							)}
 						</div>
-					</form>
+					</Form>
 				)}
 			</div>
 		</div>
 	);
 };
 
-export default Form;
+export default FormPage;

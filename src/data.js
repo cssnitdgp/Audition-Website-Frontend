@@ -10,6 +10,7 @@ export const FORM_DATA = [
 				value: "name",
 				type: "textfield",
 				inputType: "text",
+				errorMsg: "Name is required",
 			},
 			{
 				id: 2,
@@ -18,6 +19,7 @@ export const FORM_DATA = [
 				value: "roll_no",
 				type: "textfield",
 				inputType: "text",
+				errorMsg: "Roll Number is required",
 			},
 			{
 				id: 3,
@@ -26,6 +28,7 @@ export const FORM_DATA = [
 				value: "reg_no",
 				type: "textfield",
 				inputType: "text",
+				errorMsg: "Registration Number is required",
 			},
 			{
 				id: 4,
@@ -34,18 +37,20 @@ export const FORM_DATA = [
 				value: "email_id",
 				type: "textfield",
 				inputType: "email",
+				errorMsg: "Email is Invalid",
 			},
 			{
 				id: 5,
-				title: "Enter your Phone number (preferably whatsapp)",
+				title: "Enter your Phone Number (Preferably WhatsApp)",
 				required: true,
 				value: "phone",
 				type: "textfield",
 				inputType: "number",
+				errorMsg: "Phone Number is required",
 			},
 			{
 				id: 6,
-				title: "Link to your github profile (Optional).",
+				title: "Link to your Github Profile.",
 				required: false,
 				value: "github",
 				type: "textfield",
@@ -53,7 +58,7 @@ export const FORM_DATA = [
 			},
 			{
 				id: 7,
-				title: "Link to your Linkedin profile (Optional).",
+				title: "Link to your Linkedin Profile.",
 				required: false,
 				value: "linkedin",
 				type: "textfield",
@@ -90,7 +95,7 @@ export const FORM_DATA = [
 					{ id: "content_writing", option: "Content Writing" },
 				],
 				type: "checkbox",
-				required: false,
+				required: true,
 			},
 			{
 				id: 2,
@@ -110,7 +115,7 @@ export const FORM_DATA = [
 			{
 				id: 4,
 				title:
-					"Give links of some of your previous works related to the roles you are applying for.(optional)",
+					"Give links of some of your previous works related to the roles you are applying for.",
 				type: "textfield",
 				value: "prev_links",
 				required: false,
