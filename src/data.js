@@ -89,7 +89,7 @@ export const FORM_DATA = [
           { id: "web_dev", option: "Web Development" },
           { id: "gd", option: "Graphic Design" },
           { id: "vid_edit", option: "Video Editing" },
-          { id: "alumini_outreach", option: "Alumini Outreach" },
+          { id: "alumini_outreach", option: "Alumni Outreach" },
           { id: "event_man", option: "Event Management" },
           { id: "app_dev", option: "App Development" },
           { id: "content_writing", option: "Content Writing" },
