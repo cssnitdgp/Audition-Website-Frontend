@@ -336,6 +336,10 @@ input[type="range"].styled-slider.slider-progress:active::-ms-fill-lower {
 	border-color: #c1c1c1;
 }
 
+.rangeview{
+	width:100%;
+}
+
 @media screen and (max-width: 550px) {
 	.question_box {
 		width: 80%;
@@ -348,4 +352,16 @@ input[type="range"].styled-slider.slider-progress:active::-ms-fill-lower {
 		width: 80%;
 		margin: auto;
 	}
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
