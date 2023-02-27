@@ -94,20 +94,34 @@ const LandingPage = ({
 						the team.
 					</p>
 					<div className="socialIconDiv">
-						<button
-							className="custom_btn primary regorfill"
-							onClick={!isUserLoggedIn ? login : () => navigate("/form")}
-						>
-							{" "}
-							<span className="btn_content">
-								<span className="btn_text">
-									{isUserLoggedIn ? "Fill the Form" : "Register"}
+						{checkFilled ? (
+							<button
+								className="custom_btn primary disabled regorfill"
+								onClick={!isUserLoggedIn ? login : () => navigate("/form")}
+								disabled={checkFilled}
+							>
+								{" "}
+								<span className="btn_content">
+									<span className="btn_text">Form Already Filled</span>
 								</span>
-								<span className="btn_icon">
-									<FiArrowUpRight />
+							</button>
+						) : (
+							<button
+								className="custom_btn primary regorfill"
+								onClick={!isUserLoggedIn ? login : () => navigate("/form")}
+								disabled={checkFilled}
+							>
+								{" "}
+								<span className="btn_content">
+									<span className="btn_text">
+										{isUserLoggedIn ? "Fill the Form" : "Register"}
+									</span>
+									<span className="btn_icon">
+										<FiArrowUpRight />
+									</span>
 								</span>
-							</span>
-						</button>
+							</button>
+						)}
 						<a
 							target="_blank"
 							href="https://www.linkedin.com/company/css-nitdgp/"
