@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { FORM_DATA } from "../../data";
 import { ColorRing } from "react-loader-spinner";
 import "./Form.css";
-
+import modal from "../Modal/modal";
 const Form = ({ isUserLoggedIn }) => {
+  const [submitted, setsubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [skills, setSkills] = useState({
@@ -156,8 +157,7 @@ const Form = ({ isUserLoggedIn }) => {
       setLoading(false);
       console.log(res);
       if (res.message === "Form Submitted Successfully") {
-        alert("Form Submitted Successfully");
-        navigate("/");
+        navigate("/submitted");
       }
     } catch (err) {
       setLoading(false);
@@ -212,6 +212,7 @@ const Form = ({ isUserLoggedIn }) => {
           <a href="/">Logout</a>
         </button>
       </div>
+      <modal className="modalClass" />
       <div className="questions-page">
         {FORM_DATA.length > page && (
           <form>
