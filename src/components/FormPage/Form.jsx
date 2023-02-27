@@ -40,14 +40,15 @@ const FormPage = ({ isUserLoggedIn }) => {
 		tech_stack: "",
 		prev_links: "",
 	});
+
 	const [otherInfo, setOtherInfo] = useState({
-		hardwork: "1",
-		teamwork: "1",
-		humor: "1",
-		punctual: "1",
-		creative: "1",
-		prob_solving: "1",
-		responsible: "1",
+		hardwork: 1,
+		teamwork: 1,
+		humor: 1,
+		punctual: 1,
+		creative: 1,
+		prob_solving: 1,
+		responsible: 1,
 	});
 
 	useEffect(() => {
@@ -55,10 +56,6 @@ const FormPage = ({ isUserLoggedIn }) => {
 	}, [navigate]);
 
 	// All Functions Handlers
-	const handleOtherInfo = (e, value) => {
-		otherInfo[value] = e.target.value;
-		setOtherInfo(otherInfo);
-	};
 
 	useLayoutEffect(() => {
 		if (!isUserLoggedIn) {
@@ -263,52 +260,25 @@ const FormPage = ({ isUserLoggedIn }) => {
 											{questions.title}
 										</Form.Label>
 										{questions.type === "textfield" &&
-											(questions.options ? (
-												questions.options.map((op) => {
-													return (
-														<Form.Group
-															key={op.id}
-															className="questions_input_num"
-														>
-															<Form.Label className="option_label">
-																{op.option}
-															</Form.Label>
-															<Form.Control
-																required={false}
-																type="range"
-																min={0}
-																max={10}
-																step={1}
-																onChange={(e) => handleOtherInfo(e, op.value)}
-																defaultValue={1}
-																className="slider-border styled-slider2 slider-progress2"
-															/>
-															<Form.Label className="form_otherInfo">
-																{otherInfo[op.value]} / 10
-															</Form.Label>
-														</Form.Group>
-													);
-												})
-											) : (
-												<>
-													<Form.Control
-														type={questions.inputType}
-														required={questions.required}
-														value={
-															page === 0
-																? personalInfo[questions.value]
-																: skillsData[questions.value]
-														}
-														onChange={(e) =>
-															handleInputChange(e, questions.value)
-														}
-														className="input_field"
-													/>
-													<Form.Control.Feedback type="invalid">
-														{questions.errorMsg}
-													</Form.Control.Feedback>
-												</>
-											))}
+											<>
+												<Form.Control
+													type={questions.inputType}
+													required={questions.required}
+													value={
+														page === 0
+															? personalInfo[questions.value]
+															: skillsData[questions.value]
+													}
+													onChange={(e) =>
+														handleInputChange(e, questions.value)
+													}
+													className="input_field"
+												/>
+												<Form.Control.Feedback type="invalid">
+													{questions.errorMsg}
+												</Form.Control.Feedback>
+											</>
+										}
 
 										{questions.type === "textarea" && (
 											<>
@@ -363,6 +333,28 @@ const FormPage = ({ isUserLoggedIn }) => {
 													</div>
 												);
 											})}
+											{questions.type === "range" &&
+											questions.options.map((op) => {
+												return (
+													<div key={op.id} className="questions_input_num">
+														<label className="option_label">
+															{op.option}
+														</label>
+														<input
+															type={questions.fieldType}
+															required
+															min="0"
+															max="10"
+															value={otherInfo[op.value]}
+															onChange={(e) => handleInputChange(e, op.value)}
+															className="rangeview"
+														/>
+														<p id="rangeValue">{otherInfo[op.value]}/10</p>
+													</div>
+												);
+											})
+										}
+
 									</Form.Group>
 								);
 							})}

@@ -560,3 +560,11 @@ input::-webkit-inner-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
+
+.rangeview{
+	width:100%;
+}
+
+#rangeValue{
+	font-size: 1.5rem;
+}
