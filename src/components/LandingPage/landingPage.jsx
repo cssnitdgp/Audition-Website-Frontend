@@ -96,7 +96,7 @@ const LandingPage = ({
             {checkFilled ? (
               <button
                 className="custom_btn primary disabled regorfill"
-                onClick={!isUserLoggedIn ? login : () => navigate("/form")}
+                // onClick={!isUserLoggedIn ? login : () => navigate("/form")}
                 disabled={{ checkFilled }}
               >
                 {" "}
@@ -111,10 +111,13 @@ const LandingPage = ({
                   !isUserLoggedIn
                     ? login
                     : () => {
+                        // alert(
+                        //   "Do not refresh the form while filling, else all data will be lost"
+                        // );
                         alert(
-                          "Do not refresh the form while filling, else all data will be lost"
+                          "We are not accepting responses anymore"
                         );
-                        navigate("/form");
+                        // navigate("/form");
                       }
                 }
                 disabled={checkFilled}
@@ -122,7 +125,7 @@ const LandingPage = ({
                 {" "}
                 <span className="btn_content">
                   <span className="btn_text">
-                    {isUserLoggedIn ? "Fill the Form" : "Register"}
+                    {isUserLoggedIn ? "Fill the Form" : "Registration Closed"}
                   </span>
                   <span className="btn_icon">
                     <FiArrowUpRight />
